@@ -58,8 +58,6 @@ bot.on("message", message => {
   const embedcolor = "#FFFFFF";
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  
-  if (message.channel.type === 'text') return;
 
   if (message.content.indexOf(prefix) !== 0) return;  
   const author = message.author

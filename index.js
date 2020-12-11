@@ -114,7 +114,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (author.roles.has(r => r.name === permissionrolename)) {
+        if (author.roles.find(r => r.name === permissionrolename)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {
@@ -186,7 +186,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `kick`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(kickembed);
@@ -199,7 +199,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `ban`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(banembed);
@@ -212,14 +212,14 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `nick`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
       };
 
       if(helpcommand.toLowerCase() === `nickname`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
@@ -245,7 +245,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (author.roles.has(r => r.name === permissionrolename)) {
+        if (message.member.roles.find(r => r.name === permissionrolename)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {
@@ -317,7 +317,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `kick`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(kickembed);
@@ -330,7 +330,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `ban`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(banembed);
@@ -343,14 +343,14 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `nick`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
       };
 
       if(helpcommand.toLowerCase() === `nickname`) {
-        if (!author.roles.has(r => r.name === permissionrolename)) {
+        if (!message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
@@ -485,7 +485,7 @@ bot.on("message", message => {
       });
     } else
     if (command === "kick") {
-      if (!author.roles.has(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
+      if (!message.member.roles.find(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var reason = args.slice(1).join(" ");
@@ -523,7 +523,7 @@ bot.on("message", message => {
       }, 500);
     } else
     if (command === "ban") {
-      if (!author.roles.has(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
+      if (!message.member.roles.find(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var reason = args.slice(1).join(" ");
@@ -561,7 +561,7 @@ bot.on("message", message => {
       }, 500);
     } else
     if (command === "nick") {
-      if (!author.roles.has(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
+      if (!message.member.roles.find(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var nnn = args.slice(1).join(" ");
@@ -589,10 +589,10 @@ bot.on("message", message => {
 
       if (nnn.length > 32) return message.channel.send(toobigname);
 
-      message.guild.member(target).setNickname(nnn).catch(message.channel.send(nickfail));
+      message.member.setNickname(nnn).catch(message.channel.send(nickfail));
     } else
     if (command === "nickname") {
-      if (!author.roles.has(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
+      if (!message.member.roles.find(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var nnn = args.slice(1).join(" ");
@@ -620,10 +620,10 @@ bot.on("message", message => {
 
       if (nnn.length > 32) return message.channel.send(toobigname);
 
-      message.guild.member(target).setNickname(nnn).catch(message.channel.send(nickfail));
+      message.member.setNickname(nnn).catch(message.channel.send(nickfail));
     } else
     if (command === "verify") {
-      if (!author.roles.has(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
+      if (!message.member.roles.find(r => r.name === permissionrolename)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
 
@@ -641,8 +641,8 @@ bot.on("message", message => {
         .setDescription(`User ${target} is already verified, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      if (!target.roles.has(r => r.name === "Verified")) {
-        var add = message.guild.roles.has(role => role.name === "Verified");
+      if (!message.member.roles.find(r => r.name === "Verified")) {
+        var add = message.member.roles.find(role => role.name === "Verified");
         message.guild.member(target).addRole(add);
       } else
       return message.channel.send(alreadyverified);

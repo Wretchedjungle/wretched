@@ -679,7 +679,6 @@ bot.on("message", message => {
 
 bot.on('ready', () => {
     console.log("Successfully connected to user " + bot.user.tag)
-    specialcommands.push(bot.user.id);
 });
 
 bot.login(process.env.token);

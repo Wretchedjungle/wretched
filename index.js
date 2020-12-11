@@ -86,8 +86,8 @@ bot.on("message", message => {
 
   if (message.content.length >= 300) return;
 
-  const prefix = 'w!';
-  const botname = 'Bot';
+  const prefix = '!';
+  const botname = 'Bot V2.0';
   const embedcolor = "#FFFFFF";
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();

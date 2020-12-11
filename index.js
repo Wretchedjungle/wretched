@@ -114,7 +114,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (author.roles.find(r => r.name === permissionrolename)) {
+        if (message.guild.member(author).roles.find(r => r.name === permissionrolename)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {

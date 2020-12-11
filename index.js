@@ -34,6 +34,7 @@ const commands = [
   "pp",
   "gay",
   "discordid",
+  "info",
   "ping",
   "status",
   "kick",
@@ -49,53 +50,55 @@ function cmdlog(message) {
 };
 
 bot.on("message", message => {
-  if (message.author.bot) return;
+    if (message.author.bot) return;
 
-  if (message.content.length >= 300) return;
+    if (message.content.length >= 1000) return;
 
-  const prefix = '-';
-  const botname = 'Bot';
-  const embedcolor = "#FFFFFF";
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+    const prefix = '-';
+    const botname = 'Bot';
+    const embedcolor = "#FFFFFF";
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
 
-  if (message.content.indexOf(prefix) !== 0) return;  
-  const author = message.author
-  
-  const id = makeid(8) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(12);
- 
-  const invalidargs = new Discord.RichEmbed()
-    .setTitle(botname)
-    .setColor(embedcolor)
-    .setDescription(`Invalid amount of arguments for command, ${author}.`)
-    .setFooter("ID - " + id).setTimestamp();
+    if (message.content.indexOf(prefix) !== 0) return;  
+    const author = message.author
+    
+    const id = makeid(8) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(12);
+    
+    const invalidargs = new Discord.RichEmbed()
+        .setTitle(botname)
+        .setColor(embedcolor)
+        .setDescription(`Invalid amount of arguments for command, ${author}.`)
+        .setFooter("ID - " + id).setTimestamp();
 
-  const failembed = new Discord.RichEmbed()
-    .setTitle(botname)
-    .setColor(embedcolor)
-    .setDescription(`An error occured, ${author}.`)
-    .setFooter("ID - " + id).setTimestamp();
+    const failembed = new Discord.RichEmbed()
+        .setTitle(botname)
+        .setColor(embedcolor)
+        .setDescription(`An error occured, ${author}.`)
+        .setFooter("ID - " + id).setTimestamp();
 
-  const notauthorized = new Discord.RichEmbed()
-    .setTitle(botname)
-    .setColor(embedcolor)
-    .setDescription(`You are not authorized to use this command, ${author}.`)
-    .setFooter("ID - " + id).setTimestamp();
+    const notauthorized = new Discord.RichEmbed()
+        .setTitle(botname)
+        .setColor(embedcolor)
+        .setDescription(`You are not authorized to use this command, ${author}.`)
+        .setFooter("ID - " + id).setTimestamp();
 
-  const cmdlogembed = new Discord.RichEmbed()
-    .setTitle(botname)
-    .setColor(embedcolor)
-    .setDescription(`User ${author.tag} (\`${author.id}\`) ran command \`${command}\`.`)
-    .setFooter("ID - " + id).setTimestamp();
+    var argsplit = args.split(" ").split(" \n")
 
-  if (command) {
-    if(command !== commands.length) {
-      console.log('hi');
-    } else
-    if (command === commands.length) {
-      cmdlog(cmdlogembed);
+    const cmdlogembed = new Discord.RichEmbed()
+        .setTitle(botname)
+        .setColor(embedcolor)
+        .setDescription(`User ${author.tag} (\`${author.id}\`) ran command \`${command}\`. \n \n**Arguments**: \n${argsplit}`)
+        .setFooter("ID - " + id).setTimestamp();
+
+    if (command) {
+        if(command !== commands.length) {
+        console.log('hi');
+        } else
+        if (command === commands.length) {
+        cmdlog(cmdlogembed);
+        };
     };
-  };
 
     if(command === "help"){
       const helpcommand = args[0];
@@ -510,33 +513,6 @@ bot.on("message", message => {
 
       return message.channel.send(embed);
     } else
-    if (command === "embed") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      var embedType = args[0];
-      var embedBody = args.slice(1).join(" ");
-
-      if (!embedType) return message.channel.send(invalidargs);
-      if (!embedBody) return message.channel.send(invalidargs);
-
-      var embedBasic = new Discord.RichEmbed()
-        .setColor(embedcolor)
-        .setDescription(`${embedBody}`)
-
-      var embedAdvanced = new Discord.RichEmbed()
-        .setTitle(botname)
-        .setColor(embedcolor)
-        .setDescription(`${embedBody}`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      message.delete();
-      if (embedType.toLowerCase() === "basic") {
-        return message.channel.send(embedBasic);
-      } else
-      if (embedType.toLowerCase() === "advanced") {
-        return message.channel.send(embedAdvanced);
-      };
-    } else
     if (command === "8ball") {
       var possibleAnswers = ["No", "Unlikely", "Not clear", "Unclear", "Likely", "Yes"];
       var random = Math.floor(Math.random() * possibleAnswers.length);
@@ -558,138 +534,11 @@ bot.on("message", message => {
         var embed = new Discord.RichEmbed()
           .setTitle(botname, bot.user.displayAvatarURL)
           .setColor(embedcolor)
-          .setDescription(`:ping_pong: Pong! \n \n**Discord API Ping**: \`${Math.round(bot.ping)}\`ms \n**Server Ping**: \`${msg.createdTimestamp - message.createdTimestamp}\`ms`)
+          .setDescription(`:ping_pong: Pong! \n \n**Discord API Ping**: \`${Math.round(bot.ping)}\`ms \n**Bot Ping**: \`${msg.createdTimestamp - message.createdTimestamp}\`ms`)
           .setFooter("ID - " + id).setTimestamp();
 
         return message.channel.send(embed);
       });
-    } else
-    if (command === "wave") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      message.delete();
-      message.channel.send('/e wave');
-      message.channel.send(':wave:');
-    } else
-    if (command === "gettoken") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Bot logged the current bot account token in the logging channel, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var tokenembed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Current bot token is ${process.env.token}, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      cmdlog(tokenembed);
-      return message.channel.send(embed);
-    } else
-    if (command === "getemail") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Bot logged the current bot account token in the logging channel, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var tokenembed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Current bot account email is ${bot.user.email}, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      cmdlog(tokenembed);
-      return message.channel.send(embed);
-    } else
-    if (command === "authenticate") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      var target = message.mentions.users.first();
-
-      if (!target) return message.channel.send(invalidargs);
-
-      var authed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`User is already authenticated, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      if (specialcommands.includes(target.id)) return message.channel.send(authed);
-      if (target.id === bot.user.id) return message.channel.send(authed);
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Authenticated user ${target} to special commands, ${author}. To unauthenticate, say ${prefix}unauthenticate @user.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var logauth = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Authenticated user ${target}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      cmdlog(logauth);
-      specialcommands.push(target.id);
-      return message.channel.send(embed);
-    } else
-    if (command === "unauthenticate") {
-      if (!specialcommands.includes(author.id)) return message.channel.send(notauthorized);
-
-      var target = message.mentions.users.first();
-
-      if (!target) return message.channel.send(invalidargs);
-
-      var isowner = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Cannot unauthenticate the bot account, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      if (target.id === bot.user.id) return message.channel.send(isowner);
-
-      var notauth = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`User is not authenticated, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      if (!specialcommands.includes(target.id)) return message.channel.send(notauth);
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Unauthenticated user ${target} from special commands, ${author}. To authenticate them again, say ${prefix}authenticate @user.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var logauth = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Unauthenticated user ${target}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      cmdlog(logauth);
-      var index = specialcommands.indexOf(target.id);
-      if (index > -1) {
-        message.channel.send(embed);
-        return specialcommands.splice(index, 1);
-      };
-    } else
-    if (command === "status") {
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setThumbnail(bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Bot is **online**, ${author}. \n \n**Uptime**: approximately \`${Math.floor(bot.uptime / 60000)}\` minutes (\`${commaify(bot.uptime)}\` ms)`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      return message.channel.send(embed);
     };
 });
 

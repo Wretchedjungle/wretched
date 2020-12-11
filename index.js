@@ -270,11 +270,11 @@ bot.on("message", message => {
         const embedowner = new Discord.RichEmbed()
           .setTitle(botname)
           .setColor(embedcolor)
-          .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **status**, **info**, **help**, **embed**, **gettoken**, **authenticate**, **unauthenticate**, **getemail**, **resettime**\n \n**Current Prefix**: ${prefix}`)
+          .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **status**, **info**, **help**, **kick**, **ban**, **nick**, **nickname**, **mute**, **unmute**\n \n**Current Prefix**: ${prefix}`)
           .setFooter("ID - " + id).setTimestamp();
       
         if(!helpcommand) {
-          if (specialcommands.includes(author.id)) {
+          if (message.member.roles.find(r => r.name === permissionrolename)) {
             return message.channel.send(embedowner);
           } else
           return message.channel.send(embed1);
@@ -353,7 +353,7 @@ bot.on("message", message => {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(kickembed);
+          return message.channel.send(kickembed);
         };
   
         const banembed = new Discord.RichEmbed()
@@ -366,7 +366,7 @@ bot.on("message", message => {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(banembed);
+          return message.channel.send(banembed);
         };
   
         const nickembed = new Discord.RichEmbed()
@@ -379,14 +379,14 @@ bot.on("message", message => {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(nickembed);
+          return message.channel.send(nickembed);
         };
   
         if(helpcommand.toLowerCase() === `nickname`) {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(nickembed);
+          return message.channel.send(nickembed);
         };
   
         const muteembed = new Discord.RichEmbed()
@@ -399,7 +399,7 @@ bot.on("message", message => {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(muteembed);
+          return message.channel.send(muteembed);
         };
   
         const unmuteembed = new Discord.RichEmbed()
@@ -412,7 +412,7 @@ bot.on("message", message => {
           if (!message.member.roles.find(r => r.name === permissionrolename)) {
               return message.channel.send(embed3);
           } else
-          message.channel.send(unmuteembed);
+          return message.channel.send(unmuteembed);
         };
         
         if(!helpcommand) return;

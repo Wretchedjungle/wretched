@@ -42,6 +42,11 @@ var verified = [
   "332008871289683978"
 ];
 
+var owner = [
+  "398220890342424582",
+  "760391780352393257"
+];
+
 bot.on('guildMemberAdd', member => {
   if (member.guild.id !== 706723877673500682) return;
   var id = makeid(8) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(12);
@@ -116,7 +121,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {
@@ -188,7 +193,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `kick`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(kickembed);
@@ -201,7 +206,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `ban`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(banembed);
@@ -214,14 +219,14 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `nick`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
       };
 
       if(helpcommand.toLowerCase() === `nickname`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
@@ -233,7 +238,7 @@ bot.on("message", message => {
     } else
     if (command === "?") {
 
-      console.log(message.member.roles);
+      console.log(message.member);
       const helpcommand = args[0];
       
       const embed1 = new Discord.RichEmbed()
@@ -249,7 +254,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {
@@ -321,7 +326,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `kick`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(kickembed);
@@ -334,7 +339,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `ban`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(banembed);
@@ -347,14 +352,14 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
 
       if(helpcommand.toLowerCase() === `nick`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
       };
 
       if(helpcommand.toLowerCase() === `nickname`) {
-        if (message.member.roles.has(permsrolesids)) {
+        if (owner.includes(author.id)) {
             return message.channel.send(embed3);
         } else
         return message.channel.send(nickembed);
@@ -489,7 +494,7 @@ bot.on("message", message => {
       });
     } else
     if (command === "kick") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var reason = args.slice(1).join(" ");
@@ -527,7 +532,7 @@ bot.on("message", message => {
       }, 500);
     } else
     if (command === "ban") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var reason = args.slice(1).join(" ");
@@ -565,7 +570,7 @@ bot.on("message", message => {
       }, 500);
     } else
     if (command === "nick") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var nnn = args.slice(1).join(" ");
@@ -596,7 +601,7 @@ bot.on("message", message => {
       message.member.setNickname(nnn).catch(message.channel.send(nickfail));
     } else
     if (command === "nickname") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
       var nnn = args.slice(1).join(" ");
@@ -627,7 +632,7 @@ bot.on("message", message => {
       message.member.setNickname(nnn).catch(message.channel.send(nickfail));
     } else
     if (command === "verify") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var target = message.mentions.users.first();
 
@@ -645,13 +650,11 @@ bot.on("message", message => {
         .setDescription(`User ${target} is already verified, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      if (!message.guild.member(target).roles.has(717628325882757160)) {
-        message.guild.member(target).addRole(717628325882757160);
-      } else
-      return message.channel.send(alreadyverified);
+      message.guild.member(target).addRole(717628325882757160);
+      return message.channel.send(embed);
     } else
     if (command === "purge") {
-      if (!message.member.roles.has(permsrolesids)) return message.channel.send(notauthorized);
+      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 
       var messageAmount = args[0];
 

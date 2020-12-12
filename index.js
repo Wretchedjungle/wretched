@@ -232,6 +232,8 @@ bot.on("message", message => {
       if(helpcommand !== commands.length) return message.channel.send(embed3);
     } else
     if (command === "?") {
+
+      console.log(message.member.roles);
       const helpcommand = args[0];
       
       const embed1 = new Discord.RichEmbed()

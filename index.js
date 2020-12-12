@@ -247,7 +247,7 @@ bot.on("message", message => {
         .setFooter("ID - " + id).setTimestamp();
     
       if(!helpcommand) {
-        if (message.guild.member(target).roles.has(permsrolesids)) {
+        if (message.member.roles.has(permsrolesids)) {
           return message.channel.send(embedowner);
         } else
         if (message.channel.id !== botchannel) {

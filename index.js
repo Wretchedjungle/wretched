@@ -1,4 +1,3 @@
-const permsrolesids = 786931301798117407;
 const botchannel = 782470394300596225;
 const fetch = require("node-fetch");
 const Discord = require("discord.js");
@@ -52,17 +51,18 @@ bot.on('guildMemberAdd', member => {
   var id = makeid(8) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(12);
   var bname = "MBHQ Bot";
   var bcolor = "RANDOM";
-  var verifyid = 717628325882757160;
+  var verifyrole = member.guild.roles.cache.find(r => r.name === "Verified");
 
-  const failembed = new Discord.RichEmbed()
+  const failembed = new Discord.MessageEmbed()
     .setTitle(bname)
     .setColor(bcolor)
     .setDescription(`You are not whitelisted for my server on this Discord account. Please contact Wretcheds for whitelist proof.`)
     .setFooter("ID - " + id).setTimestamp();
 
-  if (!verified.includes(member.id)) return member.send(failembed);
-
-  if (verified.includes(member.id)) return message.guild.member(member).addRole(verifyid);
+  if (!verified.includes(member.id)) {
+    member.send(failembed);
+  } else
+  member.roles.add(verifyrole);
 });
 
 bot.on("message", message => {
@@ -81,25 +81,25 @@ bot.on("message", message => {
     
     const id = makeid(8) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(4) + '-' + makeid(12);
     
-    const invalidargs = new Discord.RichEmbed()
+    const invalidargs = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Invalid amount of arguments for command, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-    const failembed = new Discord.RichEmbed()
+    const failembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`An error occured, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-    const notauthorized = new Discord.RichEmbed()
+    const notauthorized = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`You are not authorized to use this command, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-    const botchanpls = new Discord.RichEmbed()
+    const botchanpls = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Please use this command in the bot channel, ${author}.`)
@@ -108,13 +108,13 @@ bot.on("message", message => {
     if(command === "help"){
       const helpcommand = args[0];
       
-      const embed1 = new Discord.RichEmbed()
+      const embed1 = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **help**`)
         .setFooter("ID - " + id).setTimestamp();
 
-      const embedowner = new Discord.RichEmbed()
+      const embedowner = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **status**, **help**, **kick**, **ban**, **nick**, **nickname**, **~~mute~~**, **~~unmute~~**, **verify**, **purge**`)
@@ -130,13 +130,13 @@ bot.on("message", message => {
         return message.channel.send(embed1);
       }
 
-      const embed3 = new Discord.RichEmbed()
+      const embed3 = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Failed to find command \`${helpcommand}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
       
-      const helpembed = new Discord.RichEmbed()
+      const helpembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **help**: \n \nDescription: \`Lists commands in the Bot.\` \n \n**Usage**: \`\`\`${prefix}help - returns the list of commands available to only you. \n${prefix}help command - returns the description + usage for [command].\`\`\` \n \n**Keywords**: \n\`command\` - the command to return the usages and keywords for it.`)
@@ -145,7 +145,7 @@ bot.on("message", message => {
       if(helpcommand.toLowerCase() === `help`) return message.channel.send(helpembed);
       if(helpcommand.toLowerCase() === `?`) return message.channel.send(helpembed);
       
-      const ballembed = new Discord.RichEmbed()
+      const ballembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **8ball**: \n \nDescription: \`Uses the powers of System.Random to answer your deepest questions.\` \n \n**Usage**: \`\`\`${prefix}8ball [string]\`\`\` \n \n**Keywords**: \n\`string\` - string question you are asking.`)
@@ -153,7 +153,7 @@ bot.on("message", message => {
       
       if(helpcommand.toLowerCase() === `8ball`) return message.channel.send(ballembed);
       
-      const ppembed = new Discord.RichEmbed()
+      const ppembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **pp**/**sizepp**: \n \nDescription: \`Calculates your pp size :flushed:\` \n \n**Usage**: \`\`\`${prefix}pp @user\`\`\` \n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -162,7 +162,7 @@ bot.on("message", message => {
       if(helpcommand.toLowerCase() === `pp`) return message.channel.send(ppembed);
       if(helpcommand.toLowerCase() === `sizepp`) return message.channel.send(ppembed)
       
-      const gayembed = new Discord.RichEmbed()
+      const gayembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **gay**: \n \nDescription: \`Calculates how much like Meech you are :flushed:\` \n \n**Usage**: \`\`\`${prefix}gay @user\`\`\` \n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -170,7 +170,7 @@ bot.on("message", message => {
       
       if(helpcommand.toLowerCase() === `gay`) return message.channel.send(gayembed);
         
-      const discordidembed = new Discord.RichEmbed()
+      const discordidembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **discordid**: \n \nDescription: \`Returns the Discord ID of a user.\` \n \n**Usage**: \`\`\`${prefix}discordid @user - returns @user's Discord ID.\`\`\`\n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -178,7 +178,7 @@ bot.on("message", message => {
         
       if(helpcommand.toLowerCase() === `discordid`) return message.channel.send(discordidembed);
         
-      const pingembed = new Discord.RichEmbed()
+      const pingembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **ping**: \n \nDescription: \`Returns "Pong!" if the bot is alive.\``)
@@ -186,7 +186,7 @@ bot.on("message", message => {
         
       if(helpcommand.toLowerCase() === `ping`) return message.channel.send(pingembed);
       
-      const kickembed = new Discord.RichEmbed()
+      const kickembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **kick**: \n \nDescription: \`Kicks the target user.\`\n \n**Usage**: \`\`\`${prefix}kick @user [reason] - kicks @user from server with [reason].\`\`\` \n \n**Keywords**: \n\`@user\` - user to kick. \n\`reason\` - reason for kick.`)
@@ -199,7 +199,7 @@ bot.on("message", message => {
         return message.channel.send(kickembed);
       };
 
-      const banembed = new Discord.RichEmbed()
+      const banembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **ban**: \n \nDescription: \`Bans the target user.\`\n \n**Usage**: \`\`\`${prefix}ban @user [reason] - bans @user from server with [reason].\`\`\` \n \n**Keywords**: \n\`@user\` - user to ban. \n\`reason\` - reason for ban.`)
@@ -212,7 +212,7 @@ bot.on("message", message => {
         return message.channel.send(banembed);
       };
 
-      const nickembed = new Discord.RichEmbed()
+      const nickembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **nick/nickname**: \n \nDescription: \`Changes the target's nickname.\`\n \n**Usage**: \`\`\`${prefix}nick @user [name] - changes @user's server nickname to [name]. \n${prefix}nickname @user [name] - changes @user's server nickname to [name].\`\`\` \n \n**Keywords**: \n\`@user\` - user to change name of. \n\`name\` - nickname to give.`)
@@ -241,13 +241,13 @@ bot.on("message", message => {
       console.log(message.member);
       const helpcommand = args[0];
       
-      const embed1 = new Discord.RichEmbed()
+      const embed1 = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **help**`)
         .setFooter("ID - " + id).setTimestamp();
 
-      const embedowner = new Discord.RichEmbed()
+      const embedowner = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Available commands for user ${author}: \n \n**8ball**, **sizepp**, **gay**, **ping**, **status**, **help**, **kick**, **ban**, **nick**, **nickname**, **~~mute~~**, **~~unmute~~**, **verify**, **purge**`)
@@ -263,13 +263,13 @@ bot.on("message", message => {
         return message.channel.send(embed1);
       }
 
-      const embed3 = new Discord.RichEmbed()
+      const embed3 = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Failed to find command \`${helpcommand}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
       
-      const helpembed = new Discord.RichEmbed()
+      const helpembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **help**: \n \nDescription: \`Lists commands in the Bot.\` \n \n**Usage**: \`\`\`${prefix}help - returns the list of commands available to only you. \n${prefix}help command - returns the description + usage for [command].\`\`\` \n \n**Keywords**: \n\`command\` - the command to return the usages and keywords for it.`)
@@ -278,7 +278,7 @@ bot.on("message", message => {
       if(helpcommand.toLowerCase() === `help`) return message.channel.send(helpembed);
       if(helpcommand.toLowerCase() === `?`) return message.channel.send(helpembed);
       
-      const ballembed = new Discord.RichEmbed()
+      const ballembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **8ball**: \n \nDescription: \`Uses the powers of System.Random to answer your deepest questions.\` \n \n**Usage**: \`\`\`${prefix}8ball [string]\`\`\` \n \n**Keywords**: \n\`string\` - string question you are asking.`)
@@ -286,7 +286,7 @@ bot.on("message", message => {
       
       if(helpcommand.toLowerCase() === `8ball`) return message.channel.send(ballembed);
       
-      const ppembed = new Discord.RichEmbed()
+      const ppembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **pp**/**sizepp**: \n \nDescription: \`Calculates your pp size :flushed:\` \n \n**Usage**: \`\`\`${prefix}pp @user\`\`\` \n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -295,7 +295,7 @@ bot.on("message", message => {
       if(helpcommand.toLowerCase() === `pp`) return message.channel.send(ppembed);
       if(helpcommand.toLowerCase() === `sizepp`) return message.channel.send(ppembed)
       
-      const gayembed = new Discord.RichEmbed()
+      const gayembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **gay**: \n \nDescription: \`Calculates how much like Meech you are :flushed:\` \n \n**Usage**: \`\`\`${prefix}gay @user\`\`\` \n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -303,7 +303,7 @@ bot.on("message", message => {
       
       if(helpcommand.toLowerCase() === `gay`) return message.channel.send(gayembed);
         
-      const discordidembed = new Discord.RichEmbed()
+      const discordidembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **discordid**: \n \nDescription: \`Returns the Discord ID of a user.\` \n \n**Usage**: \`\`\`${prefix}discordid @user - returns @user's Discord ID.\`\`\`\n \n**Keywords**: \n\`@user\` - the target user.`)
@@ -311,7 +311,7 @@ bot.on("message", message => {
         
       if(helpcommand.toLowerCase() === `discordid`) return message.channel.send(discordidembed);
         
-      const pingembed = new Discord.RichEmbed()
+      const pingembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **ping**: \n \nDescription: \`Returns "Pong!" if the bot is alive.\``)
@@ -319,7 +319,7 @@ bot.on("message", message => {
         
       if(helpcommand.toLowerCase() === `ping`) return message.channel.send(pingembed);
       
-      const kickembed = new Discord.RichEmbed()
+      const kickembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **kick**: \n \nDescription: \`Kicks the target user.\`\n \n**Usage**: \`\`\`${prefix}kick @user [reason] - kicks @user from server with [reason].\`\`\` \n \n**Keywords**: \n\`@user\` - user to kick. \n\`reason\` - reason for kick.`)
@@ -332,7 +332,7 @@ bot.on("message", message => {
         return message.channel.send(kickembed);
       };
 
-      const banembed = new Discord.RichEmbed()
+      const banembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **ban**: \n \nDescription: \`Bans the target user.\`\n \n**Usage**: \`\`\`${prefix}ban @user [reason] - bans @user from server with [reason].\`\`\` \n \n**Keywords**: \n\`@user\` - user to ban. \n\`reason\` - reason for ban.`)
@@ -345,7 +345,7 @@ bot.on("message", message => {
         return message.channel.send(banembed);
       };
 
-      const nickembed = new Discord.RichEmbed()
+      const nickembed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`Command **nick/nickname**: \n \nDescription: \`Changes the target's nickname.\`\n \n**Usage**: \`\`\`${prefix}nick @user [name] - changes @user's server nickname to [name]. \n${prefix}nickname @user [name] - changes @user's server nickname to [name].\`\`\` \n \n**Keywords**: \n\`@user\` - user to change name of. \n\`name\` - nickname to give.`)
@@ -379,13 +379,13 @@ bot.on("message", message => {
 
       if (!target) return message.channel.send(invalidargs);
       
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} has \`${pickSize}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var immune = new Discord.RichEmbed()
+      var immune = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} has \`Very Big PP\`, ${author}.`)
@@ -404,13 +404,13 @@ bot.on("message", message => {
 
       if (!target) return message.channel.send(invalidargs);
       
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} has \`${pickSize}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var immune = new Discord.RichEmbed()
+      var immune = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} has \`Very Big PP\`, ${author}.`)
@@ -428,13 +428,13 @@ bot.on("message", message => {
 
       if (!target) return message.channel.send(invalidargs);
       
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} is \`${convertToPercent}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var immune = new Discord.RichEmbed()
+      var immune = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target} is \`0% gay\`, ${author}.`)
@@ -450,16 +450,10 @@ bot.on("message", message => {
 
       var discId = target.id;
       
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname)
         .setColor(embedcolor)
         .setDescription(`User ${target}'s Discord ID is \`${discId}\`, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var self = new Discord.RichEmbed()
-        .setTitle(botname)
-        .setColor(embedcolor)
-        .setDescription(`Your Discord ID is \`${author.id}\`, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
       return message.channel.send(embed);
@@ -472,7 +466,7 @@ bot.on("message", message => {
 
       if (!args[0]) return message.channel.send(invalidargs);
 
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`${pickAnswer}, ${author}.`)
@@ -484,7 +478,7 @@ bot.on("message", message => {
       if (message.channel.id !== botchannel) return message.channel.send(botchanpls);
       message.channel.send(`**Loading**...`).then(msg => {
         msg.delete();
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
           .setTitle(botname, bot.user.displayAvatarURL)
           .setColor(embedcolor)
           .setDescription(`:ping_pong: Pong! \n \n**Discord API Ping**: \`${Math.round(bot.ping)}\`ms \n**Bot Ping**: \`${msg.createdTimestamp - message.createdTimestamp}\`ms`)
@@ -502,19 +496,19 @@ bot.on("message", message => {
       if (!target) return message.channel.send(invalidargs);
       if (!reason) return message.channel.send(invalidargs);
 
-      var kickfail = new Discord.RichEmbed()
+      var kickfail = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Failed to kick ${target}, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var kickdm = new Discord.RichEmbed()
+      var kickdm = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`You have been kicked from ${message.guild.name}, by user ${author} with reason \`${reason}\`, ${target}. \n \n**Please follow the rules in order to avoid being kicked next time.**`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Successfully kicked ${target}, ${author}.`)
@@ -540,19 +534,19 @@ bot.on("message", message => {
       if (!target) return message.channel.send(invalidargs);
       if (!reason) return message.channel.send(invalidargs);
 
-      var banfail = new Discord.RichEmbed()
+      var banfail = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Failed to ban ${target}, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var bandm = new Discord.RichEmbed()
+      var bandm = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`You have been banned from ${message.guild.name}, by user ${author} with reason \`${reason}\`, ${target}. \n \n**Do not attempt to bypass this ban - you'll just be rebanned again. Please follow the rules in order to avoid being banned next time.**`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Successfully banned ${target}, ${author}.`)
@@ -576,19 +570,21 @@ bot.on("message", message => {
 
       if (!target) return message.channel.send(invalidargs);
 
-      var embed = new Discord.RichEmbed()
+      var embed = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Successfully manually verified ${target} to the server, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var alreadyverified = new Discord.RichEmbed()
+      var alreadyverified = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`User ${target} is already verified, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      message.guild.member(target).addRole(717628325882757160);
+      if (member.roles.cache.has(r => r.name === "Verified")) return message.channel.send(alreadyverified);
+
+      member.roles.add(message.guild.roles.cache.find(r => r.name === "Verified"))
       return message.channel.send(embed);
     } else
     if (command === "purge") {
@@ -598,13 +594,13 @@ bot.on("message", message => {
 
       if (!messageAmount) return message.channel.send(invalidargs);
 
-      var toomanypurge = new Discord.RichEmbed()
+      var toomanypurge = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Message amount set out of range, should be between \`1\` and \`100\`, purging \`100\` messages, ${author}.`)
         .setFooter("ID - " + id).setTimestamp();
 
-      var toolittlepurge = new Discord.RichEmbed()
+      var toolittlepurge = new Discord.MessageEmbed()
         .setTitle(botname, bot.user.displayAvatarURL)
         .setColor(embedcolor)
         .setDescription(`Message amount set out of range, should be between \`1\` and \`100\`, purging \`1\` messages, ${author}.`)

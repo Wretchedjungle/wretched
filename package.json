@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Wretchedjungle/wretched#readme",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^12.2.0",
     "node-fetch": "^2.6.1"
   }
 }

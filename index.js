@@ -569,68 +569,6 @@ bot.on("message", message => {
         return message.channel.send(embed);
       }, 500);
     } else
-    if (command === "nick") {
-      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
-
-      var target = message.mentions.users.first();
-      var nnn = args.slice(1).join(" ");
-
-      if (!target) return message.channel.send(invalidargs);
-      if (!nnn) return message.channel.send(invalidargs);
-
-      var nickfail = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Failed to ban ${target}, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var toobigname = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Nickname is too long, ${author}. Should be between 1 and 32 characters long.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Successfully changed ${target}'s nickname to \`${nnn}\`, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      if (nnn.length > 32) return message.channel.send(toobigname);
-
-      message.member.setNickname(nnn).catch(message.channel.send(nickfail));
-    } else
-    if (command === "nickname") {
-      if (!owner.includes(author.id)) return message.channel.send(notauthorized);
-
-      var target = message.mentions.users.first();
-      var nnn = args.slice(1).join(" ");
-
-      if (!target) return message.channel.send(invalidargs);
-      if (!nnn) return message.channel.send(invalidargs);
-
-      var nickfail = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Failed to ban ${target}, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var toobigname = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Nickname is too long, ${author}. Should be between 1 and 32 characters long.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(botname, bot.user.displayAvatarURL)
-        .setColor(embedcolor)
-        .setDescription(`Successfully changed ${target}'s nickname to \`${nnn}\`, ${author}.`)
-        .setFooter("ID - " + id).setTimestamp();
-
-      if (nnn.length > 32) return message.channel.send(toobigname);
-
-      message.member.setNickname(nnn).catch(message.channel.send(nickfail));
-    } else
     if (command === "verify") {
       if (!owner.includes(author.id)) return message.channel.send(notauthorized);
 

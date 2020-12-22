@@ -32,7 +32,7 @@ bot.on("message", message => {
 
   setTimeout(function() {
     message.channel.send(number + 1);
-  }, 3000);
+  }, 1000);
 });
 
 bot.on('ready', () => {

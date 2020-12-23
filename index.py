@@ -36,6 +36,7 @@ def follow(UID):
        print(f"Generated UserID {targetid}!")
        r = session.post(f"https://friends.roblox.com/v1/users/{targetid}/follow" , headers={'x-csrf-token':csrf})
        nextcursor = r.json()
+       print(f"RESPONSE | {nextcursor}")
        print(f"Attempting to follow user...")
        if not "errors" in nextcursor:
                followedcount += 1

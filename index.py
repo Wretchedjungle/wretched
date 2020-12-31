@@ -42,6 +42,7 @@ def follow(UID):
                followedcount += 1
                print(f"Successfully followed target user! You have followed {followedcount} users since running this bot.")
                print(f" ")
+               time.sleep(180)
        else:
                print(f"An error occured while trying to follow the target user.")
                print(f"In case of a cooldown error, bot will cool down for the next 3 minutes.")

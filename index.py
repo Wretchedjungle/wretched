@@ -31,7 +31,6 @@ def update():
        followings = json.pop("count")
 
        stat = session.post("https://users.roblox.com/v1/users/179334070/status", headers={'x-csrf-token':grabCSRF(), 'status': f'Following {followings} users.'})
-       print("Updated status successfully")
 
 while True:
        update()
